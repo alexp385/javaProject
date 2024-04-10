@@ -11,9 +11,28 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
+/**
+ * ProjectServlet class
+ * Servlet for the project
+ * Handles all requests for the project
+ * Contains methods to get, add, update and delete books and authors
+ * Handles all api requests for books and authors
+ * uses Unirest to make requests to the backend running on port 8080
+ */
 @WebServlet(name = "ProjectServlet", value = "/")
 public class ProjectServlet extends HttpServlet {
 
+    /**
+     * doGet method
+     * Handles get requests
+     * displays the books or authors in a table based on the view parameter
+     * detirmines which jsp page to display based on the view parameter
+     * gets books or authors from the backend running on port 8080
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
@@ -100,6 +119,17 @@ public class ProjectServlet extends HttpServlet {
     }
 
 
+    /**
+     * doPost method
+     * Handles post requests
+     * Adds a book or author to the database
+     * this method also handles the update and delete requests for books and authors
+     * uses Unirest to make requests to the backend running on port 8080
+     * delete and put are called here due to the limitations of the Http form submissions
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
@@ -128,8 +158,6 @@ public class ProjectServlet extends HttpServlet {
                 try{
                     Unirest.setTimeouts(0, 0);
                     HttpResponse<String> bodyResponce = Unirest.post("http://localhost:8080/books?isbn=" + isbn + "&title=" + title + "&copyRight=" + copyRight + "&editionNumber=" + editionNumber + "&authorId=" + authorID).asString();
-
-//                    HttpResponse<String> response1 = Unirest.post("http://localhost:8080/books?isbn=567489&title=littlegermanboy&editionNumber=5&copyRight=1999&authorId=1").asString();
 
                     out.println("<html><body>");
                     out.println("<h1>Book added successfully</h1>");
@@ -242,28 +270,10 @@ public class ProjectServlet extends HttpServlet {
         }
     }
 
-    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        response.setContentType("text/html");
-
-        PrintWriter out = response.getWriter();
-
-        String action = request.getParameter("action");
-        System.out.println("Action: " + action);
-
-        if (action != null){
-
-        } else {
-            out.println("<html><body>");
-            out.println("<h1>Invalid action</h1>");
-            out.println("</body></html>");
-        }
-
-    }
-
-    public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    }
-
+    /**
+     * destroy method
+     * called when the servlet is destroyed
+     */
     public void destroy() {
     }
 

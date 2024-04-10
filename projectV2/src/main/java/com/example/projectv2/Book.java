@@ -13,12 +13,35 @@ import java.util.List;
 
 @Entity(name = "titles")
 public class Book {
+
+    /**
+     * isbn
+     * Primary key
+     */
     @Id
     private String isbn;
+    /**
+     * title
+     */
     private String title;
+    /**
+     * editionNumber
+     */
     private String editionNumber;
+    /**
+     * copyRight
+     */
     private String copyRight;
 
+    /**
+     * authors
+     * Many to many relationship with authors for spring data jpa
+     * A book can have many authors
+     * An author can have many books
+     * Join table author_isbn
+     * isbn is the foreign key
+     * authorID is the foreign key
+     */
     @ManyToMany
     @JoinTable(
             name = "author_isbn",

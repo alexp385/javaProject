@@ -17,12 +17,31 @@ import java.util.List;
 @Entity(name = "authors")
 public class Author {
 
+    /**
+     * authorID
+     * Primary key
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer authorID;
+    /**
+     * firstName
+     */
     private String firstName;
+    /**
+     * lastName
+     */
     private String lastName;
 
+    /**
+     * books
+     * Many to many relationship with books for spring data jpa
+     * An author can have many books
+     * A book can have many authors
+     * Join table author_isbn
+     * isbn is the foreign key
+     * authorID is the foreign key
+     */
     @ManyToMany(mappedBy = "authors")
     @JsonIgnore
     private List<Book> books = new ArrayList<Book>();
